@@ -1,0 +1,29 @@
+type Devices @model {
+  id: ID!
+  itemName: String!
+  buydate: String!
+  itemDetails:String!
+  numberofItems:Int!
+}
+type Users @model {
+  id: ID!
+  mppmailAddress: String!
+  employeeNumber: Int!
+  contactNumber:String!
+  deskName:String!
+  nameofUser:String!
+}
+type AssignedDevices @model {
+  id: ID!
+  mppmailAddress: String!
+  device: String!
+  assigneddate:String!
+  numberofItems:Int!
+  returnStatus:Boolean
+}
+type AdminLogin @model {
+  id: ID!
+  adminemail: String!
+  adminpwd: String!
+  adminStatus:String!
+}

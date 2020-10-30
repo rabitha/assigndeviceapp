@@ -19,7 +19,7 @@ class App extends Component {
       const isLoggedIn = localStorage.getItem('adminStatus');
       const adminid = localStorage.getItem('adminid');
       //console.log(isLoggedIn);
-      let components;
+      //let components;
       if (isLoggedIn === "no" && adminid !== null ) {
        // components = <Adminlogin/>;
         return (

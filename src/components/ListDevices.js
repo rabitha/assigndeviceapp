@@ -4,8 +4,15 @@ import { listDevicess,listAssignedDevicess } from '../graphql/queries';
 import { deleteDevices } from '../graphql/mutations';
 //console.log(listDevicess);
 class ListDevices extends Component {
-  state = { listDevices: [] }
+//  state = { listDevices: [] }
+  constructor(props){
+      super(props);      
+      this.state = { loading: true, listDevices: [] }
+    }
   async componentDidMount() {
+      setTimeout(() => {
+        this.setState({loading: false})
+      },2000)
     try {
       const apiData = await API.graphql(graphqlOperation(listDevicess))
       const listDevices = apiData.data.listDevicess.items
@@ -37,10 +44,11 @@ class ListDevices extends Component {
       console.log('error: ', err);
     }
   }
-  async del( devId,divId ) {
-    //console.log(devId);    
-    var del=window.confirm("Are you sure want to delete this record?");
-    if (del===true){
+  async del( devId,divId,availStatus) {
+    if(availStatus === 0){
+        console.log(availStatus);
+        var del=window.confirm("Are you sure want to delete this record?");
+    if (del===true && availStatus === 0){
       try {
        const deletedevicedetails = { 'id':devId }
         await API.graphql(graphqlOperation(deleteDevices, { input: deletedevicedetails}));
@@ -53,9 +61,15 @@ class ListDevices extends Component {
         successMessage.innerHTML = 'Failed!';
         console.log('error: ', err);
       }
+    }    
+    }else{
+        let successMessage = document.querySelector('.danger-message');
+        successMessage.innerHTML = 'Unable to delete the row';
     }
+    
   }
   render(){
+    let loading = this.state.loading ? <tr><td style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</td></tr> :  <tr></tr>;
     return (
       <div className="content-wrapper">    
         <section className="content">
@@ -67,7 +81,7 @@ class ListDevices extends Component {
                     <h3 className="card-title">List devices</h3>
                   </div>
                 <div className="col-md-6">
-                  <div className="success-message card-success" style={{'float':'right'}}><label></label></div>
+                  <div className="success-message text-success" style={{'float':'right'}}><label></label></div>
                   <div className="danger-message text-danger" style={{'float':'right'}}><label></label></div>
                 </div>
                   <div className="card-body">
@@ -82,7 +96,7 @@ class ListDevices extends Component {
                         <th>Actions</th>
                       </tr>
                       </thead>
-                      <tbody>
+                      <tbody>{loading}
                       {
                         this.state.listDevices.map((devices, i) => (
                           <tr key={"devices"+i} id={devices.itemName+i}>
@@ -92,7 +106,7 @@ class ListDevices extends Component {
                             <td>{devices.numberofItems}</td>
                             <td>{devices.avail}</td>
                             <td colSpan={2}>
-                            <button type="button" className="btn btn-danger" onClick={() => this.del(devices.id,devices.itemName+i)}>delete</button>
+                            <button type="button" className="btn btn-danger" onClick={() => this.del(devices.id,devices.itemName+i,devices.avail)}>delete</button>
                             </td>
                           </tr>
                         ))

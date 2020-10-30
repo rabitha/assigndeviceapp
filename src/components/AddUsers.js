@@ -5,14 +5,19 @@ import { createUsers } from '../graphql/mutations';
 class AddUsers extends Component{
   constructor(){
     super();
-    this.state = {mppmailAddress: '',employeeNumber: '',contactNumber: '',deskName: '',nameofUser: ''};
+    this.state = {mppmailAddress: '',employeeNumber: '',contactNumber: '',deskName: '',nameofUser: '',loading: false};
   }
   onChange = (e) => {
+    let Message = document.querySelector('.msg');
+    Message.style.display = 'none';
     this.setState({ [e.target.name]: e.target.value });
   }
   handleSubmit = (e) => {
     e.preventDefault();
     this.createUsers();
+     setTimeout(() => {
+        this.setState({loading: false})
+      },2000)
   }
   createUsers = async () => {      
     const { mppmailAddress,employeeNumber,contactNumber,deskName,nameofUser } = this.state;
@@ -22,6 +27,7 @@ class AddUsers extends Component{
     }
     try {
       const userdetails = { mppmailAddress,employeeNumber,contactNumber,deskName,nameofUser }
+      this.setState({loading: true})
       await API.graphql(graphqlOperation(createUsers, {input: userdetails}))
       let successMessage = document.querySelector('.success-message');
       successMessage.innerHTML = 'User details successfully created!';
@@ -35,11 +41,12 @@ class AddUsers extends Component{
       console.log('User details successfully created!')
     } catch (err) {
       let successMessage = document.querySelector('.danger-message');
-      successMessage.innerHTML = err;
+      successMessage.innerHTML = "Failed";
       console.log('error: ', err)
     }
   }
-  render(){
+  render(){    
+  let loading = this.state.loading ? <div style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</div> : <div></div>;
     return (
      <div className="content-wrapper">      
       <section className="content">
@@ -52,9 +59,10 @@ class AddUsers extends Component{
                   <h3 className="card-title">Add Users form</h3>
                 </div>
                 <div className="col-md-6">
-                  <div className="success-message text-success animated" style={{'float':'right'}}><label></label></div>
-                  <div className="danger-message text-danger animated" style={{'float':'right'}}><label></label></div>
+                  <div className="msg success-message text-success animated" style={{'float':'right'}}><label></label></div>
+                  <div className="msg danger-message text-danger animated" style={{'float':'right'}}><label></label></div>
                 </div>
+                {loading}
                 <form id="addUsersform" onSubmit={this.handleSubmit}>
                   <div className="card-body">
                     <div className="form-group">
@@ -64,7 +72,7 @@ class AddUsers extends Component{
                       <input type="number" required onChange={this.onChange} onFocus={this.onChange} name="employeeNumber" className="form-control" id="employeeNumber" placeholder="Enter Employee Number" defaultValue={this.state.employeeNumber}/>
                     </div>
                     <div className="form-group">
-                      <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required onFocus={this.onChange} onChange={this.onChange} name="contactNumber" className="form-control" id="contactNumber" placeholder="Enter Contact Number like 999-999-9999" defaultValue={this.state.contactNumber}/>
+                      <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required onFocus={this.onChange} onChange={this.onChange} name="contactNumber" className="form-control" id="contactNumber" placeholder="Enter Contact Number like 9999999999" defaultValue={this.state.contactNumber}/>
                     </div>
                     <div className="form-group">
                       <input type="text" required onFocus={this.onChange} onChange={this.onChange} name="deskName" className="form-control" id="deskName" placeholder="Enter Deskname" defaultValue={this.state.deskName}/>                 

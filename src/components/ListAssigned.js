@@ -4,8 +4,14 @@ import { listAssignedDevicess,getDevices,getUsers } from '../graphql/queries';
 import { updateAssignedDevices } from '../graphql/mutations';
 //console.log(updateAssignedDevices);
 class ListAssigned extends Component {
-  state = { ListAssignedDevices: [] }
-  async componentDidMount() {
+  constructor(props){
+      super(props);      
+      this.state = { loading: true, ListAssignedDevices: [] }
+    }
+  async componentDidMount() {    
+      setTimeout(() => {
+        this.setState({loading: false})
+      },5000)
     try {
        let filter = {
         returnStatus: {
@@ -52,6 +58,10 @@ class ListAssigned extends Component {
     }
   }
   render(){
+    //const listsize = this.state.listAssignedDevices;.length
+    //=== 0 ? <div style={{'color':'red','fontWeight':'bold','float':'left','fontSize':'30px'}}>Sorry nothing to display...</div> : <div></div>;
+    //console.log(listsize);
+    let loading = this.state.loading ? <tr><td style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</td></tr> : <tr></tr>;
     return (
      <div className="content-wrapper">    
         <section className="content">
@@ -73,7 +83,7 @@ class ListAssigned extends Component {
                         <th>Actions</th>
                       </tr>
                       </thead>
-                      <tbody>
+                      <tbody>{loading}
                       {
                         this.state.listAssignedDevices && this.state.listAssignedDevices.map((assigned, i) => (
                           <tr key={"assigned"+i} id={"assigned"+i} >

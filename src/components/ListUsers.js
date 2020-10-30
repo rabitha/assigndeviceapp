@@ -4,8 +4,14 @@ import { listUserss } from '../graphql/queries';
 import { deleteUsers } from '../graphql/mutations';
 
 class ListUsers extends Component {
-  state = { listUsers: [] }
+  constructor(props){
+      super(props);      
+      this.state = { loading: true, listUsers: [] }
+    }
   async componentDidMount() {
+      setTimeout(() => {
+        this.setState({loading: false})
+      },2000)
     try {
       const apiData = await API.graphql(graphqlOperation(listUserss))
       const listUsers = apiData.data.listUserss.items
@@ -38,6 +44,7 @@ class ListUsers extends Component {
     }
   }
   render(){
+    let loading = this.state.loading ? <tr><td style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</td></tr> :  <tr></tr>;
     return (
      <div className="content-wrapper">    
       <section className="content">
@@ -64,7 +71,7 @@ class ListUsers extends Component {
                       <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody>{loading}
                     {
                         this.state.listUsers.map((users, i) => (
                           <tr key={"users"+i} id={users.employeeNumber+i}>

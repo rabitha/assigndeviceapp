@@ -3,9 +3,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { createDevices } from '../graphql/mutations';
 
 class AddDevices extends Component {
-  constructor(){
-    super();
-    this.state = {itemName: '',buydate: '',itemDetails: '',numberofItems: ''};
+  constructor(props){
+    super(props);
+    this.state = {itemName: '',buydate: '',itemDetails: '',numberofItems: '',loading: false};
   }
   onChange = (e) => {
     let Message = document.querySelector('.msg');
@@ -15,6 +15,9 @@ class AddDevices extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.createDevices();
+     setTimeout(() => {
+        this.setState({loading: false})
+      },2000)
   }
   createDevices = async () => {      
     const { itemName,buydate,itemDetails,numberofItems } = this.state;
@@ -24,7 +27,7 @@ class AddDevices extends Component {
     }
     try {
       const devicedetails = { itemName,buydate,itemDetails,numberofItems }
-      this.setState({ itemName: '',buydate: '',itemDetails: '',numberofItems: '' })
+      this.setState({ itemName: '',buydate: '',itemDetails: '',numberofItems: '',loading: true })
       await API.graphql(graphqlOperation(createDevices, {input: devicedetails}))
       let successMessage = document.querySelector('.success-message');
       successMessage.innerHTML = 'device details successfully added!';
@@ -42,22 +45,7 @@ class AddDevices extends Component {
     }
   }  
   render(){
-/*const msgsuccess = {
-    backgroundColor: "#28a745",
-    padding: "2px",
-    color: "#fff",
-    marginTop: "10px",
-    float:"right",
-    display:"none"
-  };
- const msgdanger = {    
-    backgroundColor: "#dc3545",
-    padding: "2px",
-    color: "#fff",
-    marginTop: "10px",
-    float:"right",
-    display:"none"
-  };*/
+  let loading = this.state.loading ? <div style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</div> : <div></div>;
     return (
       <div className="content-wrapper">    
         <section className="content">
@@ -73,6 +61,7 @@ class AddDevices extends Component {
                     <div className="msg success-message text-success" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
                     <div className="msg danger-message text-success" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
                   </div>
+                  {loading}
                   <form id="addDeviceform" onSubmit={this.handleSubmit}>
                     <div className="card-body">
                       <div className="form-group">

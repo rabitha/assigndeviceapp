@@ -5,14 +5,14 @@ import Sidebar from './components/Sidebar';
 import Content from './components/Content';
 import Adminlogin from './components/AdminLogin';
 class App extends Component {   
-    constructor(props) {
+    /*constructor(props) {
       super(props)
      /* if (props.user) {
         //alert("You can't login if you are logged in!")
         props.history.push('/');
       }*/
-      console.log(props.history);
-    }
+      /*console.log(props.history);
+    }*/
     render(){
      // console.log(localStorage.getItem('adminStatus'));   
       //console.log("admin logged in====");

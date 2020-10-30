@@ -26,7 +26,7 @@ class Header extends Component {
 			      </li>
 			    </ul> 
 			    <ul className="navbar-nav ml-auto">
-			    	<Link to="#" onClick={this.logout}>Logout</Link>
+			    	<Link to="#" className="btn btn-warning" onClick={this.logout}><i className="fas fa-power-off"></i> Logout</Link>
 			    </ul>   
 		  	</nav>  
 		);

@@ -56,8 +56,8 @@ class ListUsers extends Component {
                   <h3 className="card-title">List Users</h3>
                 </div>
                 <div className="col-md-6">
-                  <div className="success-message card-success" style={{'float':'right'}}><label></label></div>
-                  <div className="danger-message text-danger" style={{'float':'right'}}><label></label></div>
+                  <div className="success-message card-success" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
+                  <div className="danger-message text-danger" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
                 </div>
                 <div className="card-body">
                   <table id="example1" className="table table-bordered table-striped">

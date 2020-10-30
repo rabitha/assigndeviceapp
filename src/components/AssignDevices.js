@@ -154,11 +154,7 @@ class AssignDevices extends Component {
     }
   }
   render(){
-    console.log(this.state.mppmailAddress);
-    console.log(this.state.device);
-    console.log(this.state.assigneddate);
-    console.log(this.state.numberofItems);
-    console.log(this.state.returnStatus);
+    //https://www.youtube.com/watch?v=kxuKS_MIFCE
     let loading = this.state.loading ? <div style={{'color':'green','fontWeight':'bold','float':'left','fontSize':'30px'}}>Loading ...</div> : <div></div>;
     return (
       <div className="content-wrapper">      
@@ -172,8 +168,8 @@ class AssignDevices extends Component {
                     <h3 className="card-title">Assigning Devices form</h3>
                   </div>
                   <div className="col-md-6">
-                    <div className="msg success-message text-success" style={{'float':'left'}}><label></label></div>
-                    <div className="msg danger-message text-danger" style={{'float':'left'}}><label></label></div>
+                    <div className="msg success-message text-success" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
+                    <div className="msg danger-message text-danger" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
                   </div>
                   {loading}
                   <form id="assignDeviceform" onSubmit={this.handleSubmit}>

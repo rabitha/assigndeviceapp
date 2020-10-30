@@ -59,8 +59,8 @@ class AddUsers extends Component{
                   <h3 className="card-title">Add Users form</h3>
                 </div>
                 <div className="col-md-6">
-                  <div className="msg success-message text-success animated" style={{'float':'right'}}><label></label></div>
-                  <div className="msg danger-message text-danger animated" style={{'float':'right'}}><label></label></div>
+                  <div className="msg success-message text-success animated" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
+                  <div className="msg danger-message text-danger animated" style={{'float':'left','fontWeight':'bold'}}><label></label></div>
                 </div>
                 {loading}
                 <form id="addUsersform" onSubmit={this.handleSubmit}>

@@ -69,7 +69,7 @@ class AddDevices extends Component {
                       </div>
                       <div className="form-group">
                         <div className="input-group date" id="reservationdate" data-target-input="nearest">
-                          <input type="text" required id="buydate" name="buydate" onFocus={this.onChange} placeholder="Enter Buy Date" className="form-control datetimepicker-input" data-target="#reservationdate" defaultValue={this.state.buydate}/>
+                          <input type="text" required id="buydate" name="buydate" onFocus={this.onChange}  onBlur={this.onChange} onChange={this.onChange} placeholder="Enter Buy Date" className="form-control datetimepicker-input" data-target="#reservationdate" defaultValue={this.state.buydate}/>
                           <div className="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                             <div className="input-group-text"><i className="fa fa-calendar"></i></div>
                           </div>
